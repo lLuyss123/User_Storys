@@ -1,7 +1,7 @@
 from functions import *
 
 # Initial Variables
-
+ 
 name=""
 price=1.1
 quantity=0
