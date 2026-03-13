@@ -1,5 +1,5 @@
 
-
+#Valid the user price
 def verify_product_price():
     is_ok=True
     while is_ok:
@@ -16,7 +16,7 @@ def verify_product_price():
         
      
      
-     
+#Valid the user quantity
 def verify_product_quantity():
     is_ok=True
     while is_ok:
