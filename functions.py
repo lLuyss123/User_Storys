@@ -29,4 +29,22 @@ def verify_product_quantity():
                 print("Prodcut Quantity has to be > 0")
         except:
             print("Product Quantity is not Valid")
-    
+
+#OP Inventory
+def options_inventory():
+    is_ok=True
+    print("1. Add Product")
+    print("2. Show Inventory")
+    print("3. Calculate")
+    print("4. Exit")
+    while is_ok:
+        try:
+            op=int(input("Selecct an Option: "))
+            if op>0 and op<5:
+                is_ok=False
+                return op
+            else:
+                print("OPTIONS 1 TO 4 ONLY")
+        except:
+            print("OPTIONS 1 TO 4 ONLY")
+        
