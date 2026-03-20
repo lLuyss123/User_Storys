@@ -54,7 +54,7 @@ def verify_product_quantity():
             print("Product Quantity is not Valid")
 
 
-
+#Valid the user option is on the list of op
 def valid_option_to_contin():
     is_ok=False
     while is_ok==False:
@@ -66,10 +66,7 @@ def valid_option_to_contin():
         else:
             print("ONLY YES OR NO")
             
-            
-#def add_to_inventory_list(value,inventory):
-    #inventory.append(value)
-    
+#Valid the user name not empty
 def valid_item_name ():
     is_ok=False
     while is_ok==False:
@@ -81,11 +78,12 @@ def valid_item_name ():
             is_ok=True
             return item_name
         
+#Calculate the items total to pay       
 def total_pay(value1,value2):
     total=value1*value2
     return total
 
-
+#Show the inventory that is on a list and inside of the list has dic
 def print_inventory(inventory):
     if not inventory:
         print("Inventory is EMPTY")

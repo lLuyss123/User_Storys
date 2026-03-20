@@ -1,12 +1,11 @@
 from functions import *
 #MAIN
 # Initial Variables
-
-
 inventory_list=[]
-
 total_to_pay=0
 
+#I call the function that displays the inventory of operations 
+#and validate the operations, then I perform the processes depend on the operations.
 op=options_inventory()
 while op<4:
     
@@ -19,7 +18,8 @@ while op<4:
             value2=verify_product_quantity()
             total=total_pay(value1,value2)
             total_to_pay=total_to_pay+total  
-        
+            #I used the dictionary here because the reference so
+            #I can change the values(dictionary) and adding to the list without errors
             inventory_dictionary={
             "Name":name,
             "Price":value1,
@@ -34,9 +34,10 @@ while op<4:
         print_inventory(inventory_list)
     elif op==3:
         print(f"Total Earned : {total_to_pay}")  
-        
+    
+    #Ask for the options to the user    
     op=options_inventory()
-#Print inventory
+    
 print("-------*************-------")
 print("END")
 
