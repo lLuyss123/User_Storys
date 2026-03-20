@@ -2,17 +2,14 @@ from functions import *
 #MAIN
 # Initial Variables
 
-inventory={
-    "name":[],
-    "price":[],
-    "quantity":[],
+inventory_dictionary={
+    "items_name":[],
+    "prices_by_1":[],
+    "quantitys":[],
     "total_price":[]
-    
 }
 
-name=""
-price=1.1
-quantity=0
+total_to_pay=0
 
 
 #I use functions to valid the user input
@@ -23,20 +20,20 @@ if op==1:
     keep="yes"
     while keep_add:
         print("** Adding Items **")
-        name=input("Product Name: ")
-        price= verify_product_price()
-        quantity=verify_product_quantity()
-        total_price=price*quantity
-        while keep=="yes":
-            keep=input("Do you wnaht to keep adding items YES/NO: ").strip().lower()
-            if(keep=="no"):
-                keep_add=False
-                keep="no"
-            elif(keep=="yes"):
-                keep="no"
-            else:
-                keep="yes"
-                print("ONLY YES OR NO")
+        name=valid_item_name()
+        add_to_inventory(name,inventory_dictionary["items_name"])
+        
+        value1=verify_product_price()
+        add_to_inventory(value1,inventory_dictionary["prices_by_1"])
+        
+        value2=verify_product_quantity()
+        add_to_inventory(value2,inventory_dictionary["quantitys"])
+        
+        total=total_pay(value1,value2)
+        total_to_pay=total_to_pay+total            
+        add_to_inventory(total,inventory_dictionary["total_price"])  
+        
+        keep_add=valid_option_to_contin()
                 
 elif op==2:
     print()
@@ -47,4 +44,3 @@ else:
 
 #Print inventory
 print("------------------")
-print(f"Product: {name} | Price: {price} | Quantity: {quantity} | Total: {total_price}")
