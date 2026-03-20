@@ -22,10 +22,10 @@ if op==1:
         total_to_pay=total_to_pay+total  
     
         inventory_dictionary={
-        "items_name":name,
-        "prices_by_1":value1,
-        "quantitys":value2,
-        "total_price":total
+        "Name":name,
+        "Price":value1,
+        "Quantity":value2,
+        "Total Price":total
         }
         inventory_list.append(inventory_dictionary)
         keep_add=valid_option_to_contin()
@@ -41,5 +41,4 @@ else:
 print("------------------")
 print(f"Total Earned : {total_to_pay}")  
 
-for diccionario in inventory_list:
-    print(diccionario)
+print_inventory(inventory_list)

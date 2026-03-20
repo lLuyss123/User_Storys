@@ -83,3 +83,13 @@ def valid_item_name ():
 def total_pay(value1,value2):
     total=value1*value2
     return total
+
+
+def print_inventory(inventory):
+    if not inventory:
+        print("Inventory is EMPTY")
+    else:
+        for diccionario in inventory:
+            print("-------------------------")
+            for key,value in diccionario.items():
+                print(key,value)
