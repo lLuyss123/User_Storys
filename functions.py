@@ -66,8 +66,8 @@ def valid_option_to_contin():
             print("ONLY YES OR NO")
             
             
-def add_to_inventory(value,inventory):
-    inventory.append(value)
+#def add_to_inventory_list(value,inventory):
+    #inventory.append(value)
     
 def valid_item_name ():
     is_ok=False
