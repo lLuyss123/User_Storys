@@ -3,6 +3,7 @@
 #OP Inventory
 def options_inventory():
     is_ok=True
+    print("------ Inventory ------")
     print("1. Add Product")
     print("2. Show Inventory")
     print("3. Calculate")
