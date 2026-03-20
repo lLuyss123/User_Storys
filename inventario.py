@@ -19,7 +19,7 @@ while op<4:
             total=total_pay(value1,value2)
             total_to_pay=total_to_pay+total  
             #I used the dictionary here because the reference so
-            #I can change the values(dictionary) and adding to the list without errors
+            #I can change the values(dictionary) and adding to the list WITHOUT ERRORS
             inventory_dictionary={
             "Name":name,
             "Price":value1,
