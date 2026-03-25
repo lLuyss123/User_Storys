@@ -7,10 +7,11 @@ total_to_pay=0
 #I call the function that displays the inventory of operations 
 #and validate the operations, then I perform the processes depend on the operations.
 op=options_inventory()
-while op<4:
+while op<9:
     
     if op==1:
         keep_add=True
+        
         while keep_add:
             print("** Adding Items **")
             name=valid_item_name()
@@ -21,13 +22,14 @@ while op<4:
             #I used the dictionary here because the reference so
             #I can change the values(dictionary) and adding to the list WITHOUT ERRORS
             inventory_dictionary={
-            "Name":name,
-            "Price":value1,
-            "Quantity":value2,
+            "Item Name":name,
+            "Item Price":value1,
+            "Item Quantity":value2,
             "Total Price":total
             }
             inventory_list.append(inventory_dictionary)
             keep_add=valid_option_to_contin()
+            crate_csv(inventory_dictionary)
             
                     
     elif op==2:

@@ -1,4 +1,4 @@
-
+import csv,os
 
 #OP Inventory
 def options_inventory():
@@ -6,18 +6,24 @@ def options_inventory():
     print("------ Inventory ------")
     print("1. Add Product")
     print("2. Show Inventory")
-    print("3. Calculate")
-    print("4. Exit")
+    print("3. Search")
+    print("4. Update")
+    print("5. Delete")
+    print("6. Analytics")
+    print("7. Save CSV")
+    print("8. Upload CSV")
+    
+    print("9. Exit")
     while is_ok:
         try:
             op=int(input("Selecct an Option: "))
-            if op>0 and op<5:
+            if op>0 and op<10:
                 is_ok=False
                 return op
             else:
-                print("OPTIONS 1 TO 4 ONLY")
+                print("OPTIONS 1 TO 9 ONLY")
         except:
-            print("OPTIONS 1 TO 4 ONLY")
+            print("OPTIONS 1 TO 9 ONLY")
 
 
 
@@ -92,3 +98,21 @@ def print_inventory(inventory):
             print("-------------------------")
             for key,value in diccionario.items():
                 print(key,value)
+                
+                
+                
+                
+#---------------------------------------------------------------------
+
+def crate_csv(dic):
+    archivo_existe = os.path("inventory.csv")
+    lista=["Item Name", "Item Price", "Item Quantity", "Total Price"]
+    if not archivo_existe:
+        with open("inventory.csv","w") as f:
+            line= csv.writer(f)
+            line.writerow(lista)
+    if archivo_existe:
+        with open("inventory.csv","a") as f:
+            line= csv.DictWriter(f,fieldnames=lista)
+            line.writerow(dic)
+
