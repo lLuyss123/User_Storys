@@ -33,9 +33,25 @@ while op<9:
             
                     
     elif op==2:
-        print_inventory(inventory_list)
+        print_csv()
     elif op==3:
-        print(f"Total Earned : {total_to_pay}")  
+        name=input("Searching by ITEM NAME: ")
+        search_items(name)
+        
+    elif op==4:
+        print(f"not ready")
+    
+    elif op==5:
+        print(f"not ready")  
+        
+    elif op==6:
+        print(f"not ready")
+        
+    elif op==7:
+        print(f"not ready")  
+        
+    elif op==8:
+        print(f"not ready")
     
     #Ask for the options to the user    
     op=options_inventory()

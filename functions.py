@@ -109,8 +109,8 @@ def crate_csv(dic):
     lista=["Item Name", "Item Price", "Item Quantity", "Total Price"]
     if not archivo_existe:
         with open("inventory.csv","w",newline="") as f:
-            line= csv.writer(f)
-            line.writerow(lista)
+            csvv= csv.writer(f)
+            csvv.writerow(lista)
     
     write_csv(dic)
             
@@ -121,6 +121,42 @@ def write_csv(dic):
     lista=["Item Name", "Item Price", "Item Quantity", "Total Price"]
     if archivo_existe:
         with open("inventory.csv","a",newline="") as f:
-            line= csv.DictWriter(f,fieldnames=lista)
-            line.writerow(dic)
+            csvv= csv.DictWriter(f,fieldnames=lista)
+            csvv.writerow(dic)
+            
+   
+   
+def print_csv():
+    archivo_existe = os.path.exists("inventory.csv")
+    if archivo_existe:
+        with open("inventory.csv","r" ) as f:
+            csvv=csv.DictReader(f)
+            for dic in csvv:
+                line=""
+                for k,v in dic.items():
+                    line+= (f"{k}: {v} ")
+                print(line)    
+    else:
+        print("Inventory is Empty")
+    
+ 
+         
+def search_items(itemname):
+    archivo_existe = os.path.exists("inventory.csv")
+    if archivo_existe:
+        with open("inventory.csv","r" ) as f:
+            csvv=csv.DictReader(f)
+            find=False
+            for dic in csvv:
+                line=""
+                if dic.get("Item Name")==itemname:
+                    find=True
+                    for k,v in dic.items():
+                        line+= (f"{k}: {v} ")
+                    print(line)
+            if find ==False:
+                print("The Item is NOT into the Inventory")
+                    
+                         
+    
 
