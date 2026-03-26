@@ -39,10 +39,11 @@ while op<9:
         search_items(name)
         
     elif op==4:
-        print(f"not ready")
+        print("not ready")
     
     elif op==5:
-        print(f"not ready")  
+        name=input("Deleting by ITEM NAME: ")
+        delete_item(name)
         
     elif op==6:
         print(f"not ready")
