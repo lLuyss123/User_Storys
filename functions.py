@@ -104,6 +104,17 @@ def print_inventory(inventory):
                 
 #---------------------------------------------------------------------
 
+# OS Es un módulo estándar de Python. Significa “sistema operativo”. Sirve para hacer cosas como leer/escribir archivos, ver carpetas, rutas, permisos, etc. Ejemplo frase: “os es la parte que me conecta con el sistema de archivos de la máquina”.
+
+# PATH Es un submódulo dentro de os: os.path. Se usa para trabajar con rutas de archivos y carpetas (paths). Funciones comunes: join, dirname, basename, exists. Ejemplo frase: “path es la herramienta para manipular direcciones de archivos (‘la ruta’).”
+
+#EXISTS Es una función dentro de os.path: os.path.exists(...). Devuelve True si la ruta existe, False si no. Funciona con archivo o carpeta. Ejemplo frase: “exists pregunta si la ruta existe antes de leer/escribir para que no rompa el programa.”
+
+
+######
+
+# Aquí creo el archivo csv y luego escribo en el archivo la informacion que necesito
+# Verifico que el archivo exista, si no existe lo creo inicialmente con los encabezados que son una lista
 def crate_csv(dic):
     archivo_existe = os.path.exists("inventory.csv")
     lista=["Item Name", "Item Price", "Item Quantity", "Total Price"]
@@ -115,7 +126,7 @@ def crate_csv(dic):
     write_csv(dic)
             
             
-            
+# Despues de crear el archivo csv ya que este proceso se hace a la vez que se ingresan datos para almacenarlos en este archivo lo que hago es llamar la funcion de escribir la informacion del item en el archivo, verificando que el archivo ya esté creado para que no salga ningun error          
 def write_csv(dic):
     archivo_existe = os.path.exists("inventory.csv")
     lista=["Item Name", "Item Price", "Item Quantity", "Total Price"]
@@ -125,6 +136,7 @@ def write_csv(dic):
             csvv.writerow(dic)
             
    
+# Verifico que el archivo exista luego lo abro en forma de lectura y ya que lo quiero mostrar en una sola linea lo que hago es que en una variable linea voy agregando cada clave valor para al final solo imprimir la linea
    
 def print_csv():
     archivo_existe = os.path.exists("inventory.csv")
@@ -140,7 +152,7 @@ def print_csv():
         print("Inventory is Empty")
     
  
-         
+ # Verifico que el archivo exista luego abro el archivo en forma de lectura, luego inicializo un booleano en false este hace referencia a que no he encontrado ese item en el inventario, luego me muevo por cada clave (Item name) y verifico si es igual a itemname sino me muevo al siguiente diccionario, si es igual simplemente guardo la informacion de ese diccionario en una variable para luego imprimirla   
 def search_items(itemname):
     archivo_existe = os.path.exists("inventory.csv")
     if archivo_existe:
@@ -157,6 +169,20 @@ def search_items(itemname):
             if find ==False:
                 print("The Item is NOT into the Inventory")
                     
-                         
+   
+   
+                      
+def delete_item(itemname) :
     
-
+    archivo_existe = os.path.exists("inventory.csv")
+    if archivo_existe:
+        with open("inventory.csv","r" ) as f:
+            csvv=csv.DictReader(f)
+            for dic in csvv:
+                if dic.get("Item Name")==itemname:
+                    for k,v in dic.items():
+                        print("")
+                        
+                else:
+                    print("Aqui debo reescribir el archivo sin el diccionario que encontró para así eliminarlo")
+                    
