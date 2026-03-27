@@ -39,7 +39,8 @@ while op<9:
         search_items(name)
         
     elif op==4:
-        print("not ready")
+        name=input("Updating by ITEM NAME: ")
+        update_item(name)
     
     elif op==5:
         name=input("Deleting by ITEM NAME: ")
@@ -49,7 +50,7 @@ while op<9:
         print(f"not ready")
         
     elif op==7:
-        print(f"not ready")  
+        print("CSV is SAVED")  
         
     elif op==8:
         print(f"not ready")

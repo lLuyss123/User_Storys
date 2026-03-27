@@ -202,4 +202,46 @@ def delete_item(itemname):
             writer.writeheader()
             writer.writerows(lista)
 
+def update_item(itemname):
+    
+    find=False
+    archivo_existe = existe_headers()
+    if archivo_existe:
+        lista = []
+        
+        with open("inventory.csv",mode="r") as f:
+            csvv = csv.DictReader(f)
+            header = csvv.fieldnames
+            for dic in csvv:
+                line=""
+                if dic["Item Name"]==itemname:
+                    
+                    for k, v in dic.items():
+                        line += (f"{k}: {v} ")
+                    print(f"Previews info {line}")
+                    print("Update Item Info")
+                    
+                    find=True
+                    name=valid_item_name()
+                    value1=verify_product_price()
+                    value2=verify_product_quantity()
+                    total=total_pay(value1,value2)
+                    dic={
+                        "Item Name":name,
+                        "Item Price":value1,
+                        "Item Quantity":value2,
+                        "Total Price":total
+                    }
+                    print("--- Item Updated Correctly ---")
+                lista.append(dic)
+            if not find:
+                print("Item Not Finded")
+            
 
+            # for i, dic in enumerate(lista):
+            #     if dic["Item_Name"].strip() == itemname.strip():
+            #         lista.pop(i)
+        with open("inventory.csv", mode="w",newline="") as f:
+            writer = csv.DictWriter(f, fieldnames=header)
+            writer.writeheader()
+            writer.writerows(lista)
