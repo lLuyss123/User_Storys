@@ -274,20 +274,20 @@ def stats_inventory():
         print("Inventory is Empty") 
 
 
-def cargar_csv(ruta):
-    productos_cargados = 0
-    filas_invalidas = 0
-    lista_cargada = []
+def load_csv(route):
+    loaded_items = 0
+    invalid_rows = 0
+    loaded_list = []
 
     # 1. Abrir y validar el archivo
     try:
-        with open(ruta, mode="r") as f:
+        with open(route, mode="r") as f:
             csvv = csv.DictReader(f)
 
             # Validar encabezado
-            encabezado_valido = ["Item Name", "Item Price", "Item Quantity"]
-            if list(csvv.fieldnames) != encabezado_valido:
-                print("Error: el archivo no tiene el encabezado correcto.")
+            valid_header = ["Item Name", "Item Price", "Item Quantity"]
+            if list(csvv.fieldnames) != valid_header:
+                print("Error: The file does not have the correct header.")
                 return
 
             # Recorrer cada fila
@@ -295,86 +295,86 @@ def cargar_csv(ruta):
 
                 # Validar que no haya celdas vacías
                 if any(v.strip() == "" for v in fila.values()):
-                    filas_invalidas += 1
+                    invalid_rows += 1
                     continue
 
                 # Validar y convertir tipos
                 try:
-                    nombre   = fila["Item Name"].strip()
-                    precio   = float(fila["Item Price"])
-                    cantidad = int(fila["Item Quantity"])
+                    name   = fila["Item Name"].strip()
+                    price   = float(fila["Item Price"])
+                    quantity = int(fila["Item Quantity"])
 
-                    if precio < 0 or cantidad < 0:
-                        filas_invalidas += 1
+                    if price < 0 or quantity < 0:
+                        invalid_rows += 1
                         continue
 
                 except ValueError:
-                    filas_invalidas += 1
+                    invalid_rows += 1
                     continue
 
-                lista_cargada.append({
-                    "Item Name":     nombre,
-                    "Item Price":    precio,
-                    "Item Quantity": cantidad
+                loaded_list.append({
+                    "Item Name":     name,
+                    "Item Price":    price,
+                    "Item Quantity": quantity
                 })
-                productos_cargados += 1
+                loaded_items += 1
 
     except FileNotFoundError:
-        print(f"Error: no se encontró el archivo '{ruta}'.")
+        print(f"Error: The file was not found. '{route}'.")
         return
     except UnicodeDecodeError:
-        print("Error: el archivo tiene caracteres inválidos.")
+        print("Error: The file contains invalid characters.")
         return
     except Exception as e:
-        print(f"Error inesperado: {e}")
+        print(f"Unexpected error: {e}")
         return
 
     # 2. Preguntar al usuario qué hacer
-    print(f"\n{productos_cargados} productos encontrados en el archivo.")
-    decision = input("¿Sobrescribir inventario actual? (S/N): ").strip().upper()
+    print(f"\n{loaded_items} products found in the archive.")
+    decision = input("¿Overwrite current inventory? (YES/NO): ").strip().lower()
 
     archivo_existe, header = existe_headers()
 
-    if decision == "S":
+    if decision == "yes":
         # Borra todo y escribe lo cargado
         with open("inventory.csv", mode="w", newline="") as f:
             writer = csv.DictWriter(f, fieldnames=header)
             writer.writeheader()
-            writer.writerows(lista_cargada)
-        print("Inventario reemplazado.")
+            writer.writerows(loaded_list)
+        print("Replaced Inventory.")
 
-    elif decision == "N":
-        print("Política: si el producto ya existe se suma la cantidad y se actualiza el precio.")
+    elif decision == "no":
+        print("Policy: If the product already exists, the quantity is added and the price is updated..")
 
         # Leer inventario actual
-        inventario_actual = []
+        current_inventory = []
         if archivo_existe:
             with open("inventory.csv", mode="r") as f:
                 csvv = csv.DictReader(f)
                 for dic in csvv:
-                    inventario_actual.append(dic)
+                    current_inventory.append(dic)
 
         # Fusionar
-        for producto_nuevo in lista_cargada:
-            encontrado = False
-            for producto_actual in inventario_actual:
-                if producto_actual["Item Name"] == producto_nuevo["Item Name"]:
-                    producto_actual["Item Quantity"] = int(producto_actual["Item Quantity"]) + producto_nuevo["Item Quantity"]
-                    producto_actual["Item Price"]    = producto_nuevo["Item Price"]
-                    encontrado = True
-                    break
-            if not encontrado:
-                inventario_actual.append(producto_nuevo)
+        for new_product in loaded_list:
+            find = False
+            for current_product in current_inventory:
+                if current_product["Item Name"] == new_product["Item Name"]:
+                    current_product["Item Quantity"] = int(current_product["Item Quantity"]) + new_product["Item Quantity"]
+                    current_product["Item Price"]    = new_product["Item Price"]
+                    find = True
+                    #break
+            if not find:
+                current_inventory.append(new_product)
 
         # Guardar fusión
         with open("inventory.csv", mode="w", newline="") as f:
             writer = csv.DictWriter(f, fieldnames=header)
             writer.writeheader()
-            writer.writerows(inventario_actual)
+            writer.writerows(current_inventory)
         print("Inventario fusionado.")
 
     # 3. Resumen
     print(f"\n--- Resumen ---")
-    print(f"Productos cargados : {productos_cargados}")
-    print(f"Filas invalidas    : {filas_invalidas}")
-    print(f"Accion             : {'Reemplazo' if decision == 'S' else 'Fusion'}")                     
+    print(f"Loaded Items : {loaded_items}")
+    print(f"Invalid Rows    : {invalid_rows}")
+    print(f"Action             : {'Replaced' if decision == 'yes' else 'Merge'}")     
