@@ -1,5 +1,5 @@
-Item Name,Item Price,Item Quantity,Total Price
-manzana,1.0,2,
-pera,2.0,3,
-mango,34.0,4,136.0
-uva,3.0,3,9.0
+Item Name,Item Price,Item Quantity
+manzana,1.0,2
+pera,2.0,-3
+mango,34.0,4
+uva,-3.0,3

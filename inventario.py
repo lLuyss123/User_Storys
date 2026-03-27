@@ -16,14 +16,12 @@ while op<9:
             name=valid_item_name()
             value1=verify_product_price()
             value2=verify_product_quantity()
-            total=total_pay(value1,value2) 
             #I used the dictionary here because the reference so
             #I can change the values(dictionary) and adding to the list WITHOUT ERRORS
             inventory_dictionary={
             "Item Name":name,
             "Item Price":value1,
-            "Item Quantity":value2,
-            "Total Price":total
+            "Item Quantity":value2
             }
             inventory_list.append(inventory_dictionary)
             keep_add=valid_option_to_contin()

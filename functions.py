@@ -125,7 +125,7 @@ def crate_csv(dic):
 
 def existe_headers():
     archivo_existe = os.path.exists("inventory.csv")
-    lista = ["Item Name", "Item Price", "Item Quantity", "Total Price"]
+    lista = ["Item Name", "Item Price", "Item Quantity"]
     return archivo_existe, lista
 
 
@@ -225,12 +225,10 @@ def update_item(itemname):
                     name=valid_item_name()
                     value1=verify_product_price()
                     value2=verify_product_quantity()
-                    total=total_pay(value1,value2)
                     dic={
                         "Item Name":name,
                         "Item Price":value1,
-                        "Item Quantity":value2,
-                        "Total Price":total
+                        "Item Quantity":value2
                     }
                     print("--- Item Updated Correctly ---")
                 lista.append(dic)
@@ -249,7 +247,7 @@ def update_item(itemname):
 
 def stats_inventory():
     total_units=0
-    total_value=0
+    total_value=0.0
     list_dic=[]
     archivo_existe,l = existe_headers()
     if archivo_existe:
@@ -257,7 +255,7 @@ def stats_inventory():
             csvv = csv.DictReader(f)
             for dic in csvv:
                 total_units+=int((dic["Item Quantity"]))
-                total_value+= float(dic["Total Price"])
+                total_value+= int((dic["Item Quantity"])) * (float(dic["Item Price"]))
                 list_dic.append(dic)
             more_expen=list_dic[0]
             more_stock=list_dic[0]
@@ -287,7 +285,7 @@ def cargar_csv(ruta):
             csvv = csv.DictReader(f)
 
             # Validar encabezado
-            encabezado_valido = ["Item Name", "Item Price", "Item Quantity", "Total Price"]
+            encabezado_valido = ["Item Name", "Item Price", "Item Quantity"]
             if list(csvv.fieldnames) != encabezado_valido:
                 print("Error: el archivo no tiene el encabezado correcto.")
                 return
@@ -305,7 +303,6 @@ def cargar_csv(ruta):
                     nombre   = fila["Item Name"].strip()
                     precio   = float(fila["Item Price"])
                     cantidad = int(fila["Item Quantity"])
-                    total    = float(fila["Total Price"])
 
                     if precio < 0 or cantidad < 0:
                         filas_invalidas += 1
@@ -318,8 +315,7 @@ def cargar_csv(ruta):
                 lista_cargada.append({
                     "Item Name":     nombre,
                     "Item Price":    precio,
-                    "Item Quantity": cantidad,
-                    "Total Price":   total
+                    "Item Quantity": cantidad
                 })
                 productos_cargados += 1
 
@@ -365,7 +361,6 @@ def cargar_csv(ruta):
                 if producto_actual["Item Name"] == producto_nuevo["Item Name"]:
                     producto_actual["Item Quantity"] = int(producto_actual["Item Quantity"]) + producto_nuevo["Item Quantity"]
                     producto_actual["Item Price"]    = producto_nuevo["Item Price"]
-                    producto_actual["Total Price"]   = producto_actual["Item Price"] * producto_actual["Item Quantity"]
                     encontrado = True
                     break
             if not encontrado:
