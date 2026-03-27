@@ -142,7 +142,7 @@ def write_csv(dic):
 
 
 def print_csv():
-    archivo_existe = existe_headers()
+    archivo_existe,l = existe_headers()
     if archivo_existe:
         with open("inventory.csv", "r") as f:
             csvv = csv.DictReader(f)
@@ -157,7 +157,7 @@ def print_csv():
 
 # Verifico que el archivo exista luego abro el archivo en forma de lectura, luego inicializo un booleano en false este hace referencia a que no he encontrado ese item en el inventario, luego me muevo por cada clave (Item name) y verifico si es igual a itemname sino me muevo al siguiente diccionario, si es igual simplemente guardo la informacion de ese diccionario en una variable para luego imprimirla
 def search_items(itemname):
-    archivo_existe = existe_headers()
+    archivo_existe,l = existe_headers()
     if archivo_existe:
         with open("inventory.csv", mode="r") as f:
             csvv = csv.DictReader(f)
@@ -177,7 +177,7 @@ def search_items(itemname):
 
 def delete_item(itemname):
     find=False
-    archivo_existe = existe_headers()
+    archivo_existe,l = existe_headers()
     if archivo_existe:
         lista = []
         
@@ -205,7 +205,7 @@ def delete_item(itemname):
 def update_item(itemname):
     
     find=False
-    archivo_existe = existe_headers()
+    archivo_existe,l = existe_headers()
     if archivo_existe:
         lista = []
         
@@ -219,7 +219,7 @@ def update_item(itemname):
                     for k, v in dic.items():
                         line += (f"{k}: {v} ")
                     print(f"Previews info {line}")
-                    print("Update Item Info")
+                    print("Updating Item Info")
                     
                     find=True
                     name=valid_item_name()
@@ -245,3 +245,16 @@ def update_item(itemname):
             writer = csv.DictWriter(f, fieldnames=header)
             writer.writeheader()
             writer.writerows(lista)
+
+
+def stats_inventory():
+    archivo_existe,l = existe_headers()
+    print(archivo_existe)
+    if archivo_existe:
+        with open("inventory.csv",mode="r") as f:
+            csvv = csv.DictReader(f)
+            for dic in csvv:
+                for k, v in dic.items():
+                    print (f"{k}: {v} ")
+                    
+                        

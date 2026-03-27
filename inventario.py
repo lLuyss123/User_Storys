@@ -2,7 +2,6 @@ from functions import *
 #MAIN
 # Initial Variables
 inventory_list=[]
-total_to_pay=0
 
 #I call the function that displays the inventory of operations 
 #and validate the operations, then I perform the processes depend on the operations.
@@ -17,8 +16,7 @@ while op<9:
             name=valid_item_name()
             value1=verify_product_price()
             value2=verify_product_quantity()
-            total=total_pay(value1,value2)
-            total_to_pay=total_to_pay+total  
+            total=total_pay(value1,value2) 
             #I used the dictionary here because the reference so
             #I can change the values(dictionary) and adding to the list WITHOUT ERRORS
             inventory_dictionary={
@@ -50,7 +48,13 @@ while op<9:
         print(f"not ready")
         
     elif op==7:
-        print("CSV is SAVED")  
+        archivo_existe = existe_headers()
+        if archivo_existe==True:
+            print("CSV is SAVED")  
+            print(os.path.abspath("inventory.csv"))
+        else:
+            print("Inventory is Empty")
+        
         
     elif op==8:
         print(f"not ready")
