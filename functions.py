@@ -248,13 +248,30 @@ def update_item(itemname):
 
 
 def stats_inventory():
+    total_units=0
+    total_value=0
+    list_dic=[]
     archivo_existe,l = existe_headers()
-    print(archivo_existe)
     if archivo_existe:
         with open("inventory.csv",mode="r") as f:
             csvv = csv.DictReader(f)
             for dic in csvv:
-                for k, v in dic.items():
-                    print (f"{k}: {v} ")
+                total_units+=int((dic["Item Quantity"]))
+                total_value+= float(dic["Total Price"])
+                list_dic.append(dic)
+            more_expen=list_dic[0]
+            more_stock=list_dic[0]
+            for dic in list_dic:
+                if float(dic["Item Price"]) > float(more_expen["Item Price"]):
+                    more_expen = dic
+                if float(dic["Item Quantity"]) > float(more_stock["Item Quantity"]):
+                    more_stock= dic
                     
-                        
+            print(f"The Most expencive Item: {more_expen['Item Name']} With: $ {more_expen['Item Price']} ")
+            print(f"The Most Quantity Item: {more_stock['Item Name']} With: {more_stock['Item Quantity']} in stock")
+     
+        print(f"{total_units} is the Total units")          
+        print(f"{total_value} is the Total Value")    
+    else:
+        print("Inventory is Empty") 
+                       

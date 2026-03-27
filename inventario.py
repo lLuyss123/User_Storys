@@ -45,7 +45,7 @@ while op<9:
         delete_item(name)
         
     elif op==6:
-        print(f"not ready")
+        stats_inventory() 
         
     elif op==7:
         archivo_existe = existe_headers()
