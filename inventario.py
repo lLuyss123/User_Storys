@@ -57,7 +57,8 @@ while op<9:
         
         
     elif op==8:
-        print(f"not ready")
+        ruta = input("Ingresa la ruta del archivo CSV a cargar: ")
+        cargar_csv(ruta)
     
     #Ask for the options to the user    
     op=options_inventory()
