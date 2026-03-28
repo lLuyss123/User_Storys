@@ -332,19 +332,24 @@ def load_csv(route):
     # 2. Ask the user what to do
     print(f"\n{loaded_items} products found in the archive.")
     decision = input("Overwrite current inventory? (YES/NO): ").strip().lower()
+    while decision != "yes" and decision != "no":
+        
+        
+        archivo_existe, header = existe_headers()
 
-    archivo_existe, header = existe_headers()
+        if decision == "yes":
+            # Delete everything and write what was loaded
+            with open("inventory.csv", mode="w", newline="") as f:
+                writer = csv.DictWriter(f, fieldnames=header)
+                writer.writeheader()
+                writer.writerows(loaded_list)
+            print("Replaced Inventory.")
 
-    if decision == "yes":
-        # Delete everything and write what was loaded
-        with open("inventory.csv", mode="w", newline="") as f:
-            writer = csv.DictWriter(f, fieldnames=header)
-            writer.writeheader()
-            writer.writerows(loaded_list)
-        print("Replaced Inventory.")
-
-    elif decision == "no":
-        print("Policy: If the product already exists, the quantity is added and the price is updated..")
+        elif decision == "no":
+            print("Policy: If the product already exists, the quantity is added and the price is updated..")
+        else:
+            print("Invalid option, please type YES or NO.")
+            decision = input("Overwrite current inventory? (YES/NO): ").strip().lower()
 
         # Read current inventory
         current_inventory = []
