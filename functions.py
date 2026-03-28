@@ -102,18 +102,18 @@ def print_inventory(inventory):
 
 # ---------------------------------------------------------------------
 
-# OS Es un módulo estándar de Python. Significa “sistema operativo”. Sirve para hacer cosas como leer/escribir archivos, ver carpetas, rutas, permisos, etc. Ejemplo frase: “os es la parte que me conecta con el sistema de archivos de la máquina”.
+# OS is a standard Python module. It means "operating system". It helps you do things like read/write files, view folders, paths, permissions, etc. Example phrase: "os is the part that connects me to the machine's file system".
 
-# PATH Es un submódulo dentro de os: os.path. Se usa para trabajar con rutas de archivos y carpetas (paths). Funciones comunes: join, dirname, basename, exists. Ejemplo frase: “path es la herramienta para manipular direcciones de archivos (‘la ruta’).”
+# PATH is a submodule within os: os.path. It is used to work with file and folder paths (paths). Common functions: join, dirname, basename, exists. Example phrase: "path is the tool to manipulate file addresses ('the path')."
 
-# EXISTS Es una función dentro de os.path: os.path.exists(...). Devuelve True si la ruta existe, False si no. Funciona con archivo o carpeta. Ejemplo frase: “exists pregunta si la ruta existe antes de leer/escribir para que no rompa el programa.”
+# EXISTS is a function within os.path: os.path.exists(...). Returns True if the path exists, False if not. It works with files or folders. Example phrase: "exists asks if the path exists before reading/writing so it doesn't break the program."
 
 
 ######
 
 
-# Aquí creo el archivo csv y luego escribo en el archivo la informacion que necesito
-# Verifico que el archivo exista, si no existe lo creo inicialmente con los encabezados que son una lista
+# Here I create the csv file and then write the information I need into the file
+# I check if the file exists, if it doesn't exist I create it initially with the headers which is a list
 def crate_csv(dic):
     archivo_existe, lista = existe_headers()
     if not archivo_existe:
@@ -129,7 +129,7 @@ def existe_headers():
     return archivo_existe, lista
 
 
-# Despues de crear el archivo csv ya que este proceso se hace a la vez que se ingresan datos para almacenarlos en este archivo lo que hago es llamar la funcion de escribir la informacion del item en el archivo, verificando que el archivo ya esté creado para que no salga ningun error
+# After creating the csv file, since this process is done at the same time data is entered to store them in this file, I call the function to write the item information to the file, verifying that the file is already created so no error occurs
 def write_csv(dic):
     archivo_existe, lista = existe_headers()
     if archivo_existe:
@@ -138,7 +138,7 @@ def write_csv(dic):
             csvv.writerow(dic)
 
 
-# Verifico que el archivo exista luego lo abro en forma de lectura y ya que lo quiero mostrar en una sola linea lo que hago es que en una variable linea voy agregando cada clave valor para al final solo imprimir la linea
+# I check if the file exists, then I open it in read mode and since I want to display it on one line, what I do is add each key-value pair to a line variable so that at the end I only print the line
 
 
 def print_csv():
@@ -155,7 +155,7 @@ def print_csv():
         print("Inventory is Empty")
 
 
-# Verifico que el archivo exista luego abro el archivo en forma de lectura, luego inicializo un booleano en false este hace referencia a que no he encontrado ese item en el inventario, luego me muevo por cada clave (Item name) y verifico si es igual a itemname sino me muevo al siguiente diccionario, si es igual simplemente guardo la informacion de ese diccionario en una variable para luego imprimirla
+# I check if the file exists, then I open the file in read mode. Then I initialize a boolean to false which refers to the fact that I have not found that item in the inventory. Then I move through each key (Item name) and check if it equals itemname, if not I move to the next dictionary. If it equals, I simply save that dictionary's information in a variable to print it later
 def search_items(itemname):
     archivo_existe,l = existe_headers()
     if archivo_existe:
@@ -279,26 +279,26 @@ def load_csv(route):
     invalid_rows = 0
     loaded_list = []
 
-    # 1. Abrir y validar el archivo
+    # 1. Open and validate the file
     try:
         with open(route, mode="r") as f:
             csvv = csv.DictReader(f)
 
-            # Validar encabezado
+            # Validate header
             valid_header = ["Item Name", "Item Price", "Item Quantity"]
             if list(csvv.fieldnames) != valid_header:
                 print("Error: The file does not have the correct header.")
                 return
 
-            # Recorrer cada fila
+            # Loop through each row
             for fila in csvv:
 
-                # Validar que no haya celdas vacías
+                # Validate that there are no empty cells
                 if any(v.strip() == "" for v in fila.values()):
                     invalid_rows += 1
                     continue
 
-                # Validar y convertir tipos
+                # Validate and convert data types
                 try:
                     name   = fila["Item Name"].strip()
                     price   = float(fila["Item Price"])
@@ -329,14 +329,14 @@ def load_csv(route):
         print(f"Unexpected error: {e}")
         return
 
-    # 2. Preguntar al usuario qué hacer
+    # 2. Ask the user what to do
     print(f"\n{loaded_items} products found in the archive.")
-    decision = input("¿Overwrite current inventory? (YES/NO): ").strip().lower()
+    decision = input("Overwrite current inventory? (YES/NO): ").strip().lower()
 
     archivo_existe, header = existe_headers()
 
     if decision == "yes":
-        # Borra todo y escribe lo cargado
+        # Delete everything and write what was loaded
         with open("inventory.csv", mode="w", newline="") as f:
             writer = csv.DictWriter(f, fieldnames=header)
             writer.writeheader()
@@ -346,7 +346,7 @@ def load_csv(route):
     elif decision == "no":
         print("Policy: If the product already exists, the quantity is added and the price is updated..")
 
-        # Leer inventario actual
+        # Read current inventory
         current_inventory = []
         if archivo_existe:
             with open("inventory.csv", mode="r") as f:
@@ -354,7 +354,7 @@ def load_csv(route):
                 for dic in csvv:
                     current_inventory.append(dic)
 
-        # Fusionar
+        # Merge
         for new_product in loaded_list:
             find = False
             for current_product in current_inventory:
@@ -366,15 +366,15 @@ def load_csv(route):
             if not find:
                 current_inventory.append(new_product)
 
-        # Guardar fusión
+        # Save merge
         with open("inventory.csv", mode="w", newline="") as f:
             writer = csv.DictWriter(f, fieldnames=header)
             writer.writeheader()
             writer.writerows(current_inventory)
-        print("Inventario fusionado.")
+        print("Inventory merged.")
 
-    # 3. Resumen
-    print(f"\n--- Resumen ---")
+    # 3. Summary
+    print(f"\n--- Summary ---")
     print(f"Loaded Items : {loaded_items}")
     print(f"Invalid Rows    : {invalid_rows}")
     print(f"Action             : {'Replaced' if decision == 'yes' else 'Merge'}")     
